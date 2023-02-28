@@ -4,6 +4,11 @@
 .LSOverride
 .idea
 
+# Local copies
+
+devops-coderepo-*
+generated
+
 # Local .terraform directories
 **/.terraform/*
 

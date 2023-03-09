@@ -62,3 +62,24 @@ variable "repository_repository_type" {
 }
 
 ## Devops related variables
+
+## Objectstorage related variables
+
+variable "bucket_access_type" {
+  description = "(Optional) (Updatable) The type of public access enabled on this bucket. A bucket is set to NoPublicAccess by default, which only allows an authenticated caller to access the bucket and its contents. When ObjectRead is enabled on the bucket, public access is allowed for the GetObject, HeadObject, and ListObjects operations. When ObjectReadWithoutList is enabled on the bucket, public access is allowed for the GetObject and HeadObject operations."
+  default     = "NoPublicAccess"
+}
+variable "object_events_enabled" {
+  description = "Whether or not events are emitted for object state changes in this bucket. By default, objectEventsEnabled is set to false. Set objectEventsEnabled to true to emit events for object state changes. For more information about events, see Overview of Events."
+  type        = bool
+  default     = false
+}
+variable "storage_tier" {
+  description = "The storage tier type assigned to the bucket. A bucket is set to 'Standard' tier by default, which means objects uploaded or copied to the bucket will be in the standard storage tier. When the 'Archive' tier type is set explicitly for a bucket, objects uploaded or copied to the bucket will be stored in archive storage. The 'storageTier' property is immutable after bucket is created."
+  default     = "Standard"
+}
+variable "versioning" {
+  description = "The versioning status on the bucket. A bucket is created with versioning Disabled by default. For versioning Enabled, objects are protected from overwrites and deletes, by maintaining their version history. When versioning is Suspended, the previous versions will still remain but new versions will no longer be created when overwitten or deleted."
+  default     = "Enabled"
+}
+## Objectstorage related variables

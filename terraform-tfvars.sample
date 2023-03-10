@@ -17,3 +17,8 @@ oci_user_name       = "*****"
 #If you are using OCI's direct sign-in, enter the username in the following format: TenancyName/YourUserName. For example, Acme/alice_jones. Your password is the auth token you created previously.
 
 oci_user_authtoken = "****"
+
+#AWS_ACCESS_KEY_ID
+aws_access_key_id = "***"
+#AWS_SECRET_ACCESS_KEY
+aws_access_key = "**="

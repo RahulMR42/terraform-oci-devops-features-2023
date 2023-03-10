@@ -16,6 +16,14 @@ variable oci_user_authtoken {
   default = ""
 }
 
+variable "aws_access_key" {
+  default = ""
+}
+
+variable "aws_access_key_id" {
+  default = ""
+}
+
 locals {
   ocir_docker_repository = join("", [lower(lookup(data.oci_identity_regions.current_region.regions[0], "key")), ".ocir.io"])
   ocir_namespace = lookup(data.oci_objectstorage_namespace.ns, "namespace")
@@ -61,6 +69,10 @@ variable "repository_repository_type" {
   default = "HOSTED"
 }
 
+variable "image_static_tag" {
+  default = "new"
+  description = "A static tag for container image deployment"
+}
 ## Devops related variables
 
 ## Objectstorage related variables
@@ -83,3 +95,39 @@ variable "versioning" {
   default     = "Enabled"
 }
 ## Objectstorage related variables
+## Vault related variables
+variable "create_new_vault" {
+  default     = true
+  description = "Creates a new vault"
+}
+variable "existing_vault_ocid" {
+  default = ""
+}
+variable "existing_masterkey_ocid" {
+  default = ""
+}
+variable "vault_vault_type" {
+  default = "DEFAULT"
+}
+variable "vault_key_shape_algorithm" {
+  default = "AES"
+}
+variable "key_key_shape_length" {
+  default = 32
+}
+variable "vault_key_protection_mode" {
+  default = "HSM"
+}
+## Vault related variables
+## Container instance variables
+
+## Container instance variables
+
+## Container repo variables
+variable "container_repository_is_public" {
+  default = true
+}
+variable "container_repo_name" {
+  default = "devopspythonrepo"
+}
+## Container repo variables

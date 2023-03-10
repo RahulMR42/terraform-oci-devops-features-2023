@@ -4,9 +4,13 @@
 data "oci_identity_availability_domains" "ADs" {
   compartment_id = var.tenancy_ocid
 }
-
+data "template_file" "ad_names" {
+  count = length(
+    data.oci_identity_availability_domains.ADs.availability_domains
+  )
+  template = data.oci_identity_availability_domains.ADs.availability_domains[count.index]["name"]
+}
 # Gets home and current regions
-
 data "oci_identity_tenancy" "tenant_details" {
   tenancy_id = var.tenancy_ocid
   provider   = oci.current_region

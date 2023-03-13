@@ -155,6 +155,18 @@ resource "oci_core_security_list" "oke_endpoint_security_list" {
     }
   }
   ingress_security_rules {
+    description = "External access to Python Application via http"
+    source      = lookup(var.network_cidrs, (var.cluster_endpoint_visibility == "Private") ? "VCN-CIDR" : "ALL-CIDR")
+    source_type = "CIDR_BLOCK"
+    protocol    = local.tcp_protocol_number
+    stateless   = true
+
+    tcp_options {
+      max = local.http_port_number
+      min = local.http_port_number
+    }
+  }
+  ingress_security_rules {
     description = "Kubernetes worker to Kubernetes API endpoint communication"
     source      = lookup(var.network_cidrs, "SUBNET-REGIONAL-CIDR")
     source_type = "CIDR_BLOCK"
@@ -178,6 +190,7 @@ resource "oci_core_security_list" "oke_endpoint_security_list" {
       min = local.k8s_worker_to_control_plane_port_number
     }
   }
+
   ingress_security_rules {
     description = "Path discovery"
     source      = lookup(var.network_cidrs, "SUBNET-REGIONAL-CIDR")

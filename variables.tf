@@ -150,7 +150,18 @@ variable "build_pipeline_stage_deploy_stage_type" {
 variable "build_pipeline_stage_is_pass_all_parameters_enabled" {
   default = true
 }
-
+variable "trigger_source" {
+  default = "DEVOPS_CODE_REPOSITORY"
+}
+variable "trigger_events" {
+  default = ["PUSH",]
+}
+variable "trigger_execlude_patterns" {
+  default = ["*.md",]
+}
+variable "trigger_include_patterns" {
+  default = ["*.tf", "*.yaml", "python_app/*",]
+}
 ## Devops related variables
 
 ## Objectstorage related variables

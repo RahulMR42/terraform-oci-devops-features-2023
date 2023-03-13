@@ -21,7 +21,7 @@ resource "oci_devops_build_pipeline" "test_build_pipeline" {
     }
     items {
       name = "SUBNET_OCID"
-      default_value = oci_core_subnet.oke_lb_subnet[0].id
+      default_value = oci_core_subnet.oke_k8s_endpoint_subnet[0].id
       description = "SubnetId."
     }
     items {

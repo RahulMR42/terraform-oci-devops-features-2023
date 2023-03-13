@@ -73,6 +73,84 @@ variable "image_static_tag" {
   default = "new"
   description = "A static tag for container image deployment"
 }
+variable "build_pipeline_stage_build_pipeline_stage_type" {
+  default = "BUILD"
+}
+variable "build_pipeline_stage_build_source_collection_items_connection_type" {
+  default = "DEVOPS_CODE_REPOSITORY"
+}
+variable "build_pipeline_stage_build_source_collection_items_branch" {
+  default = "main"
+}
+variable "build_pipeline_stage_build_source_collection_items_name" {
+  default = "build_apps"
+}
+variable "build_pipeline_stage_build_spec_file" {
+  default = ""
+}
+variable "build_pipeline_stage_display_name" {
+  default = "Build Applications"
+}
+
+variable "build_pipeline_stage_image" {
+  default = "OL7_X86_64_STANDARD_10"
+}
+variable "build_pipeline_stage_stage_execution_timeout_in_seconds" {
+  default = 36000
+}
+variable "build_pipeline_stage_wait_criteria_wait_duration" {
+  default = "waitDuration"
+}
+
+variable "build_pipeline_stage_wait_criteria_wait_type" {
+  default = "ABSOLUTE_WAIT"
+}
+variable "deploy_artifact_argument_substitution_mode" {
+  default = "SUBSTITUTE_PLACEHOLDERS"
+}
+variable "docker_image_dynamic_source_type" {
+  default = "OCIR"
+}
+variable "ocker_image_dynamic_artifact_type" {
+    default = "DOCKER_IMAGE"
+}
+variable "devops_artifact_command_spec_ga_path" {
+  default = "commad_spec.yaml"
+}
+variable "devops_artifact_command_spec_ga_version" {
+  default = "0.0"
+}
+variable "build_pipeline_stage_deliver_artifact_stage_type" {
+  default = "DELIVER_ARTIFACT"
+}
+variable "deliver_command_spec_artifact_name" {
+  default = "command_spec"
+}
+variable "deliver_artifact_stage_display_name" {
+  default = "Upload Artifacts"
+}
+variable "deliver_artiifact_docker_image_dynamic_name" {
+  default = "container_instance_app_dockerimage"
+}
+variable "deliver_artiifact_docker_image_static_name" {
+  default = "container_instance_app_dockerimage"
+}
+variable "shellstage_shape" {
+  default = "CI.Standard.E4.Flex"
+}
+variable "shellstage_memory_in_gbs" {
+  default = 1
+}
+variable "shellstage_ocpus" {
+  default = 1
+}
+variable "build_pipeline_stage_deploy_stage_type" {
+  default = "TRIGGER_DEPLOYMENT_PIPELINE"
+}
+variable "build_pipeline_stage_is_pass_all_parameters_enabled" {
+  default = true
+}
+
 ## Devops related variables
 
 ## Objectstorage related variables

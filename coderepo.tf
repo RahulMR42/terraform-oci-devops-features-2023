@@ -24,6 +24,7 @@ resource "null_resource" "clone_from_ocicoderepo" {
      echo '(3) Starting git clone command... '; echo 'Username: Before' ${var.oci_user_name}; echo 'Username: After' ${local.encode_user}; echo 'auth_token' ${local.auth_token}; git clone https://${local.encode_user}:${local.auth_token}@devops.scmservice.${var.region}.oci.oraclecloud.com/namespaces/${local.ocir_namespace}/projects/${oci_devops_project.test_project.name}/repositories/${oci_devops_repository.test_repository.name};
      cp -pr config/* ${oci_devops_repository.test_repository.name}/
      cp -pr python_app ${oci_devops_repository.test_repository.name}/
+     cp -pr helm_chart ${oci_devops_repository.test_repository.name}/
 EOT
   }
 }
@@ -33,10 +34,15 @@ resource "null_resource" "update_vault_ocid" {
                 oci_devops_repository.test_repository]
   provisioner "local-exec" {
     command = <<-EOT
-    echo "Updating Vault OCIds ..."
+    echo "Updating Vault OCIds for Shell Stage..."
     sed  's/SECRET_aws_access_key_id/${oci_vault_secret.aws_access_key_id.id}/g' ${oci_devops_repository.test_repository.name}/command_spec.yaml >${oci_devops_repository.test_repository.name}/command_spec.yaml-tmp
     sed  's/SECRET_aws_secret_access_key/${oci_vault_secret.aws_access_key.id}/g' ${oci_devops_repository.test_repository.name}/command_spec.yaml-tmp >${oci_devops_repository.test_repository.name}/command_spec.yaml
     rm  ${oci_devops_repository.test_repository.name}/command_spec.yaml-*
+    echo "Updating Vault OCIds for Helm Stage..."
+    sed  's/SEC_Helm_Repo_User/${oci_vault_secret.helm_repo_user.id}/g' ${oci_devops_repository.test_repository.name}/helm_chart/build_spec.yaml >${oci_devops_repository.test_repository.name}/helm_chart/build_spec.yaml-1
+    sed  's/SEC_User_Auth_Token/${oci_vault_secret.helm_repo_token.id}/g' ${oci_devops_repository.test_repository.name}/helm_chart/build_spec.yaml-1 >${oci_devops_repository.test_repository.name}/helm_chart/build_spec.yaml-2
+    sed  's/SEC_Gpg_Passphrase/${oci_vault_secret.gpg_passphrase.id}/g' ${oci_devops_repository.test_repository.name}/helm_chart/build_spec.yaml-2 >${oci_devops_repository.test_repository.name}/helm_chart/build_spec.yaml
+    rm ${oci_devops_repository.test_repository.name}/helm_chart/build_spec.yaml-*
    EOT
   }
 }

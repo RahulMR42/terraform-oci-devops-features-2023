@@ -5,7 +5,7 @@ resource "oci_devops_build_pipeline" "test_build_pipeline" {
   project_id = oci_devops_project.test_project.id
 
   description  = var.build_pipeline_description
-  display_name = "${var.app_name}_buildpipeline"
+  display_name = "${var.app_name}_build_containerinstance"
   defined_tags = { "${oci_identity_tag_namespace.ArchitectureCenterTagNamespace.name}.${oci_identity_tag.ArchitectureCenterTag.name}" = var.release }
 
   build_pipeline_parameters {
@@ -63,6 +63,44 @@ resource "oci_devops_build_pipeline" "test_build_pipeline" {
       name = "AWS_ACCESS_KEY_SECRET_OCID"
       default_value = oci_vault_secret.aws_access_key.id
       description = "aws access key secret ocid."
+    }
+  }
+}
+
+# Build pipeline for helm
+
+resource "oci_devops_build_pipeline" "helm_build_pipeline" {
+  project_id = oci_devops_project.test_project.id
+
+  description  = var.build_pipeline_description
+  display_name = "${var.app_name}_build_helmpackages"
+  defined_tags = { "${oci_identity_tag_namespace.ArchitectureCenterTagNamespace.name}.${oci_identity_tag.ArchitectureCenterTag.name}" = var.release }
+
+  build_pipeline_parameters {
+    items {
+      name = "GPG_ARTIFACT_OCID"
+      default_value = "dummy_ocid"
+      description = "OCID of the artifact."
+    }
+    items {
+      name = "HELM_SIGN_KEY"
+      default_value = var.helm_sign_key
+      description = "Helm chart sign in key."
+    }
+    items {
+      name = "HELM_REGISTRY"
+      default_value = "${var.region}.ocir.io"
+      description = "Helm registry base url."
+    }
+    items {
+      name = "HELM_CHART_REPO"
+      default_value = var.helm_chart_repo
+      description = "Static image name"
+    }
+    items {
+      name = "HELM_REGISTRY_NAMESPACE"
+      default_value = data.oci_objectstorage_namespace.ns.namespace
+      description = "OCIR Name space."
     }
   }
 }

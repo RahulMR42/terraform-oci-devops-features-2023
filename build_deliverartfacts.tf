@@ -35,3 +35,32 @@ resource "oci_devops_build_pipeline_stage" "test_deliver_artifact_stage" {
   defined_tags = { "${oci_identity_tag_namespace.ArchitectureCenterTagNamespace.name}.${oci_identity_tag.ArchitectureCenterTag.name}" = var.release }
 
 }
+
+#Deliver artifact for helm
+resource "oci_devops_build_pipeline_stage" "helm_deliver_artifact_stage" {
+
+  depends_on = [oci_devops_build_pipeline_stage.helm_build_pipeline_stage]
+
+  #Required
+  build_pipeline_id = oci_devops_build_pipeline.helm_build_pipeline.id
+  build_pipeline_stage_predecessor_collection {
+    #Required
+    items {
+      #Required
+      id = oci_devops_build_pipeline_stage.helm_build_pipeline_stage.id
+    }
+  }
+
+  build_pipeline_stage_type = var.build_pipeline_stage_deliver_artifact_stage_type
+
+  deliver_artifact_collection {
+    items {
+      artifact_id   = oci_devops_deploy_artifact.helm_chart_package.id
+      artifact_name = var.deliver_command_spec_artifact_name_helm
+    }
+
+  }
+  display_name = var.deliver_artifact_stage_display_name
+  defined_tags = { "${oci_identity_tag_namespace.ArchitectureCenterTagNamespace.name}.${oci_identity_tag.ArchitectureCenterTag.name}" = var.release }
+
+}

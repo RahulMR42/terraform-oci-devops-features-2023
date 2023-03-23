@@ -5,3 +5,11 @@ resource "oci_artifacts_container_repository" "test_container_repository_pythona
   #Optional
   is_public = var.container_repository_is_public
 }
+
+resource "oci_artifacts_container_repository" "test_container_repository_helm" {
+  #Required
+  compartment_id = var.compartment_ocid
+  display_name   = var.container_repo_name_helm
+  #Optional
+  is_public = var.container_repository_is_public
+}

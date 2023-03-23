@@ -24,14 +24,24 @@ variable "aws_access_key_id" {
   default = ""
 }
 
-locals {
-  ocir_docker_repository = join("", [lower(lookup(data.oci_identity_regions.current_region.regions[0], "key")), ".ocir.io"])
-  ocir_namespace = lookup(data.oci_objectstorage_namespace.ns, "namespace")
-}
-
 variable "app_name" {
   default     = "ociDevops"
   description = "Application name. Will be used as prefix to identify resources, such as OKE, VCN, DevOps, and others"
+}
+
+variable "gpg_passphrase" {
+  default = "oci_devops_with_helm"
+  description = "gpg passphrase public key"
+}
+variable "helm_sign_key" {
+  default = "oci_devops"
+}
+variable "helm_chart_repo" {
+  default = "node-helm-package"
+}
+locals {
+  ocir_docker_repository = join("", [lower(lookup(data.oci_identity_regions.current_region.regions[0], "key")), ".ocir.io"])
+  ocir_namespace = lookup(data.oci_objectstorage_namespace.ns, "namespace")
 }
 
 variable "release" {
@@ -40,6 +50,21 @@ variable "release" {
 }
 
 ## Devops related variables
+variable "helm_release_name" {
+  default = "ocidevops"
+}
+variable "build_runner_type" {
+  default = "CUSTOM"
+}
+variable "build_pipeline_stage_build_runner_shape_config_memory_in_gbs" {
+  default = 8
+}
+variable "build_pipeline_stage_build_runner_shape_config_ocpus" {
+  default = 2
+}
+variable "helm_chart_version" {
+  default = "0.1.0"
+}
 variable "project_description" {
   description = "Devops project description"
   default = "OCI Devops project features"
@@ -126,6 +151,9 @@ variable "build_pipeline_stage_deliver_artifact_stage_type" {
 variable "deliver_command_spec_artifact_name" {
   default = "command_spec"
 }
+variable "deliver_command_spec_artifact_name_helm" {
+  default = "APPLICATION_DOCKER_IMAGE"
+}
 variable "deliver_artifact_stage_display_name" {
   default = "Upload Artifacts"
 }
@@ -161,6 +189,9 @@ variable "trigger_execlude_patterns" {
 }
 variable "trigger_include_patterns" {
   default = ["*.tf", "*.yaml", "python_app/*",]
+}
+variable "number_of_approvals_required" {
+  default = 1
 }
 ## Devops related variables
 
@@ -218,5 +249,8 @@ variable "container_repository_is_public" {
 }
 variable "container_repo_name" {
   default = "devopspythonrepo"
+}
+variable "container_repo_name_helm" {
+  default = "devopshelmrepo"
 }
 ## Container repo variables

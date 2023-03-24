@@ -35,7 +35,7 @@ resource "oci_devops_deploy_stage" "helm_deploy_stage" {
   set_values {
     items {
       name  = "image.repository"
-      value = "${var.region}.ocir.io/${data.oci_objectstorage_namespace.ns.namespace}/node-express"
+      value = "${var.region}.ocir.io/${data.oci_objectstorage_namespace.ns.namespace}/${oci_artifacts_container_repository.test_container_repository_helm.display_name}"
     }
   }
 

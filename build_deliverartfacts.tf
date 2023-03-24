@@ -55,7 +55,7 @@ resource "oci_devops_build_pipeline_stage" "helm_deliver_artifact_stage" {
 
   deliver_artifact_collection {
     items {
-      artifact_id   = oci_devops_deploy_artifact.helm_chart_package.id
+      artifact_id   = oci_devops_deploy_artifact.docker_image_dynamic_helm.id
       artifact_name = var.deliver_command_spec_artifact_name_helm
     }
 

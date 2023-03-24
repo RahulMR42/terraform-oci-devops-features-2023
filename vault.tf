@@ -83,7 +83,7 @@ resource oci_vault_secret "gpg_passphrase" {
     content_type = "BASE64"
     content = base64encode(var.gpg_passphrase)
   }
-  secret_name    = "gpg_passphrase"
+  secret_name    = "gpg_passphrase_new"
   vault_id       = oci_kms_vault.vault.id
 }
 

@@ -30,7 +30,7 @@ variable "app_name" {
 }
 
 variable "gpg_passphrase" {
-  default = "oci_devops_with_helm"
+  default = ""
   description = "gpg passphrase public key"
 }
 variable "helm_sign_key" {

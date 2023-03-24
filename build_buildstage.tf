@@ -50,7 +50,7 @@ resource "oci_devops_build_pipeline_stage" "helm_build_pipeline_stage" {
   build_pipeline_stage_type          = "BUILD"
   build_spec_file                    = "helm_chart/build_spec.yaml"
   defined_tags                       = {"${oci_identity_tag_namespace.ArchitectureCenterTagNamespace.name}.${oci_identity_tag.ArchitectureCenterTag.name}" = var.release}
-  display_name                       = "build_signin_helm_package"
+  display_name                       = "build_a_signed_helm_package"
   image                              = var.build_pipeline_stage_image
   stage_execution_timeout_in_seconds = var.build_pipeline_stage_stage_execution_timeout_in_seconds
   build_pipeline_stage_predecessor_collection {

@@ -39,6 +39,7 @@ securityContext: {}
 service:
   type: LoadBalancer
   port: 80
+  nodeSvcPort: 80
 
 ingress:
   enabled: false

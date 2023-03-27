@@ -237,6 +237,21 @@ resource "oci_core_security_list" "oke_endpoint_security_list" {
       code = "4"
     }
   }
+
+  egress_security_rules {
+    description      = "Egress for Python application"
+    destination      = lookup(var.network_cidrs, "ALL-CIDR")
+    destination_type = "CIDR_BLOCK"
+    protocol         = local.tcp_protocol_number
+    stateless        = false
+    tcp_options {
+      source_port_range {
+        #Required
+        max = local.http_port_number
+        min = local.http_port_number
+      }
+    }
+  }
   defined_tags = { "${oci_identity_tag_namespace.ArchitectureCenterTagNamespace.name}.${oci_identity_tag.ArchitectureCenterTag.name}" = var.release }
 
   count = var.create_new_oke_cluster ? 1 : 0

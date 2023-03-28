@@ -188,7 +188,7 @@ variable "trigger_execlude_patterns" {
   default = ["*.md",]
 }
 variable "trigger_include_patterns" {
-  default = ["*.tf", "*.yaml", "python_app/*",]
+  default = ["*.tf", "*.yaml", "python_app/*", "helm_chart/*"]
 }
 variable "number_of_approvals_required" {
   default = 1

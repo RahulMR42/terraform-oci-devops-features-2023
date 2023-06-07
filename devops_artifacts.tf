@@ -89,7 +89,7 @@ resource "oci_devops_deploy_artifact" "helm_chart_package" {
   deploy_artifact_source {
     chart_url                   = "oci://${var.region}.ocir.io/${data.oci_objectstorage_namespace.ns.namespace}/${var.helm_chart_repo}/node-service"
     deploy_artifact_source_type = "HELM_CHART"
-    deploy_artifact_version     = "${var.helm_chart_version}-$${BUILDRUN_HASH}"
+    deploy_artifact_version     = "${var.helm_chart_version}"
 
     helm_verification_key_source {
       vault_secret_id              = oci_vault_secret.gpg_pub_key.id
